@@ -14,12 +14,25 @@
     <!--
     user가 인증되어있으면 '로그아웃하기'라는 링크를 보여주고
     아니면 '로그인하기' 링크 보여주기
+
+    logout_view 만들기
+        request.method가 POST일 경우,
+        request.user를 로그아웃시킴
+
+        URL : /members/logout/
+        view : members.views.logout_view
+        로그아웃 완료 후에는 로그인 페이지로 redirect하기
     -->
     <div>
         {% if user.is_authenticated %}
-        <a href="">로그아웃하기</a>
+        <!-- <a> 태그로는 POST 요청을 보낼 수 없으므로 form을 써야함 -->
+        <form action="{% url 'members:members-logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">로그아웃하기</button>
+            </form>
+        <!-- <a href="{% url 'members:members-logout' %}">로그아웃하기</a> -->
         {% else %}
-        <a href="{% url 'members:members-login'  %}">로그인</a>
+        <a href="{% url 'members:members-login' %}">로그인</a>
         {% endif %}
     </div>
     {% block content %}
