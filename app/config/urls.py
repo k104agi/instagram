@@ -1,3 +1,10 @@
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
+
+from . import views
+
 """config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -25,20 +32,16 @@ config.urls에 추가한 static()은 MEDIA_URL로의 request에 대해
 MEDIA_ROOT에서 찾은 파일을 response로 돌려줌
 
 '''
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import path, include
 
-from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
     path('', views.index),
+    path('members/', include('members.urls')),
     # path('media/<str:path>/',특정view_function추가),
     # 위 기능을 요약한 장고기능이 있음 - 하단 + static
 ] + static(
-    prefix =settings.MEDIA_URL,
+    prefix=settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT,
 )
