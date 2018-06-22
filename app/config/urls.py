@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 
 '''
 POST 클래스 추가, MEDIA_URL 연결
@@ -28,13 +30,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
-
+    path('', views.index),
     # path('media/<str:path>/',특정view_function추가),
     # 위 기능을 요약한 장고기능이 있음 - 하단 + static
 ] + static(
-    prefix ='/media/',
+    prefix =settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT,
 )
